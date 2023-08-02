@@ -17,7 +17,7 @@ function getDinoIpsum() {
       }
     });
 
-    const url = `https://dinoipsum.com/api/?format=json`;
+    const url = `https://dinoipsum.com/api/?format=json&paragraphs=1&words=1`;
     request.open("GET", url, true);
     request.send();
   });
@@ -30,7 +30,11 @@ function getDinoIpsum() {
 }
 
 function printDinos(dinos) {
-  document.querySelector('p').innerText = dinos[0][0];
+  let display = '';
+  for (let index = 0; index < dinos[0][0].length; index++) {
+    display = display + '_ ';
+  }
+  document.querySelector('p').innerText = `Dinosaur to guess: ${display}`;
 }
 
 function printError(error) {
