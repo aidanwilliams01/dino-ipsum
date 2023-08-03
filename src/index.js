@@ -41,13 +41,19 @@ function printError(error) {
   document.querySelector('p').innerText = `Error: ${error[0].status} ${error[0].statusText}: ${error[1].message}`;
 }
 
-getDinoIpsum();
-
-// function handleTriangleForm() {
-//   event.preventDefault();
+// function evaluateGuess(guess) {
+  
 // }
 
-// window.addEventListener("load", function() {
-//   document.querySelector("#triangle-checker-form").addEventListener("submit", handleTriangleForm);
-//   this.document.querySelector("#rectangle-area-form").addEventListener("submit", handleRectangleForm);
-// });
+function handleForm() {
+  event.preventDefault();
+  // const guess = document.querySelector('input').value;
+  // evaluateGuess(guess);
+}
+
+window.addEventListener("load", function() {
+  getDinoIpsum();
+  document.querySelector("form").addEventListener("submit", function() {
+    handleForm();
+  });
+});
