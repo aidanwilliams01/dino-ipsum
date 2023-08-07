@@ -34,21 +34,35 @@ function printDinos(dinos) {
   for (let index = 0; index < dinos[0][0].length; index++) {
     display = display + '_ ';
   }
-  document.querySelector('p').innerText = `Dinosaur to guess: ${display}`;
+  document.querySelector('#display').innerText = `${display}`;
+  document.querySelector('#answer').innerText = dinos[0][0];
 }
 
 function printError(error) {
   document.querySelector('p').innerText = `Error: ${error[0].status} ${error[0].statusText}: ${error[1].message}`;
 }
 
-// function evaluateGuess(guess) {
-  
-// }
+function evaluateGuess(guess) {
+  const answer = document.querySelector('#answer').innerText.toLowerCase();
+  let display = document.querySelector('#display').innerText.toLowerCase();
+  display = display.split(' ');
+  for (let index = 0; index < answer.length; index++) {
+    const element = answer[index];
+    if (element === guess) {
+      display[index] = guess;
+    }
+  }
+  return display.join(' ');
+}
+
 
 function handleForm() {
   event.preventDefault();
-  // const guess = document.querySelector('input').value;
-  // evaluateGuess(guess);
+  const guess = document.querySelector('input').value;
+  // let guessed = document.querySelector('#guessed').innertext;
+  document.querySelector('#display').innerText = evaluateGuess(guess);
+  // guessed = guessed + guess;
+  // document.querySelector('#guessed').innertext = guessed;
 }
 
 window.addEventListener("load", function() {
