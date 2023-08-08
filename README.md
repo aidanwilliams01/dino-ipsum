@@ -1,6 +1,6 @@
-# (Application Name)
+# Dino Ipsum
 
-#### (Brief Description of Application)
+#### A dinosaur guessing game.
 
 #### By Aidan Williams
 
@@ -12,18 +12,14 @@
 * _Node Package Manager_
 * _webpack_
 * _ESLint_
-* _Jest_
-* _Babel_
 
 ## Description
+
+A browser game where the player tries to guess a random dinosaur name within ten letter guesses.
 
 ## Setup/Installation Requirements
 
 * _Clone this repository to your desktop._
-* _Create a file named '.env' in the top level of the directory._
-* _Sign in or create an account at [url here]._
-* _Copy the API key at [url here] and place it in your .env file using the following format (without brackets):_ 
-  * _`API_KEY=[your API key here]`_
 * _Run the following commands in the top level of the directory._
   * _`$ npm install` to install packages_
   * _`$ npm run build` to build the project using webpack_
