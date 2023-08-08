@@ -1,5 +1,3 @@
-// import Triangle from './js/triangle.js';
-// import Rectangle from './js/rectangle.js';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
@@ -56,18 +54,35 @@ function evaluateGuess(guess) {
 }
 
 
-function handleForm() {
+function handleForm(guesses) {
   event.preventDefault();
+  guesses -= 1;
   const guess = document.querySelector('input').value;
-  // let guessed = document.querySelector('#guessed').innertext;
-  document.querySelector('#display').innerText = evaluateGuess(guess);
-  // guessed = guessed + guess;
-  // document.querySelector('#guessed').innertext = guessed;
+  const result = evaluateGuess(guess);
+  const answer = document.querySelector('#answer').innerText;
+  let guessed = document.querySelector('#guessed').innerText;
+  document.querySelector('#display').innerText = result;
+  document.querySelector('input').value = '';
+  document.querySelector('#guesses').innerText = `${guesses} guess(es) remaining.`;
+  guessed = guessed + ` ${guess}`;
+  document.querySelector('#guessed').innerText = guessed;
+  if (result.replaceAll(' ', '').toLowerCase() === answer.toLowerCase()) {
+    document.querySelector('form').setAttribute('class', 'hidden');
+    document.querySelector('#answer').innerText = `The answer is ${answer}.`;
+    document.querySelector('#answer').removeAttribute('class');
+  }
+  if (guesses === 0) {
+    document.querySelector('form').setAttribute('class', 'hidden');
+    document.querySelector('#answer').innerText = `The answer is ${answer}.`;
+    document.querySelector('#answer').removeAttribute('class');
+  }
+  return guesses;
 }
 
 window.addEventListener("load", function() {
   getDinoIpsum();
+  let guesses = 10;
   document.querySelector("form").addEventListener("submit", function() {
-    handleForm();
+    guesses = handleForm(guesses);
   });
 });
