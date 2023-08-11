@@ -53,36 +53,58 @@ function evaluateGuess(guess) {
   return display.join(' ');
 }
 
+function isLetter(char) {
+  return ((char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z')) ? true : false;
+}
 
-function handleForm(guesses) {
+function isGuessed(guess, guessed) {
+  const array = guessed.split(' ');
+  for (let index = 0; index < array.length; index++) {
+    const element = array[index];
+    if(guess === element) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function handleForm(event, guesses) {
   event.preventDefault();
-  guesses -= 1;
+  document.querySelector('#valid').setAttribute('class', 'hidden');
   const guess = document.querySelector('input').value;
-  const result = evaluateGuess(guess);
-  const answer = document.querySelector('#answer').innerText;
   let guessed = document.querySelector('#guessed').innerText;
-  document.querySelector('#display').innerText = result;
-  document.querySelector('input').value = '';
-  document.querySelector('#guesses').innerText = `${guesses} guess(es) remaining.`;
-  guessed = guessed + ` ${guess}`;
-  document.querySelector('#guessed').innerText = guessed;
-  if (result.replaceAll(' ', '').toLowerCase() === answer.toLowerCase()) {
-    document.querySelector('form').setAttribute('class', 'hidden');
-    document.querySelector('#answer').innerText = `The answer is ${answer}.`;
-    document.querySelector('#answer').removeAttribute('class');
+  if (isLetter(guess) === true && isGuessed(guess, guessed) === false) {
+    guesses -= 1;
+    const result = evaluateGuess(guess);
+    const answer = document.querySelector('#answer').innerText;
+    let guessed = document.querySelector('#guessed').innerText;
+    document.querySelector('#display').innerText = result;
+    document.querySelector('input').value = '';
+    document.querySelector('#guesses').innerText = `${guesses} guess(es) remaining.`;
+    guessed = guessed + ` ${guess}`;
+    document.querySelector('#guessed').innerText = guessed;
+    if (result.replaceAll(' ', '').toLowerCase() === answer.toLowerCase()) {
+      document.querySelector('form').setAttribute('class', 'hidden');
+      document.querySelector('#answer').innerText = `The answer is ${answer}.`;
+      document.querySelector('#answer').removeAttribute('class');
+    }
+    if (guesses === 0) {
+      document.querySelector('form').setAttribute('class', 'hidden');
+      document.querySelector('#answer').innerText = `The answer is ${answer}.`;
+      document.querySelector('#answer').removeAttribute('class');
+    }
+    return guesses;
   }
-  if (guesses === 0) {
-    document.querySelector('form').setAttribute('class', 'hidden');
-    document.querySelector('#answer').innerText = `The answer is ${answer}.`;
-    document.querySelector('#answer').removeAttribute('class');
+  else {
+    document.querySelector('#valid').removeAttribute('class');
+    return guesses;
   }
-  return guesses;
 }
 
 window.addEventListener("load", function() {
   getDinoIpsum();
   let guesses = 10;
   document.querySelector("form").addEventListener("submit", function() {
-    guesses = handleForm(guesses);
+    guesses = handleForm(event, guesses);
   });
 });
